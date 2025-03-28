@@ -1,0 +1,866 @@
+@font-face{
+    font-family: 'Swiss721BlkCnBT';
+    src: url('fonts/Swiss721BlkCnBT.woff2') format('woff2'),
+         url('fonts/Swiss721BlkCnBT.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #011d02; /* Same as your gallery section */
+    color: white;
+    overflow-x: visible;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    font-family: 'Swiss721', Georgia, serif; /* Apply Swiss 721 */
+    font-weight: bold;
+    line-height: 1.6;
+    margin-left: 30px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;/* ✅ Push footer down */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+
+}
+
+.main-content {
+    flex: 1; /* Pushes the footer down */
+}
+
+footer {
+    margin-top: auto; /* Ensures footer stays at the bottom */
+    padding: 20px 0;
+    background-color: #005a05;
+    color: white;
+}
+/* Full Page Loading Screen */
+.loading-screen {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(38, 105, 60, 0.85) !important; /* Semi-transparent background */
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999 !important;
+    opacity: 1 !important;
+    transition: opacity 0.5s ease-out;
+}
+
+/* Circular Wrapper for the Video */
+.loading-logo-wrapper {
+    width: 450px;
+    height: 450px;
+    display: block;
+    position: relative;
+    overflow: hidden; /* Keep content inside the circle */
+    border-radius: 50%; /* Makes the wrapper circular */
+}
+
+/* Video Inside the Circle */
+.loading-video {
+    width: 450px;
+    height: 450px;
+    object-fit: cover; /* Ensures video fits the circle */
+    z-index: 9999;
+}
+
+/* Fade-Out Effect for Smooth Transition */
+.loading-screen.hide {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+    transition: opacity 3.5s ease-out;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #021601;
+    transition: width 0.3s ease-in-out;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    overflow-y: auto; /* ✅ Allow scrolling */
+    overflow-x: hidden; /* Hide horizontal scroll */
+}
+
+/* Adjust content to avoid overlap */
+.content {
+    margin-left: 250px; /* Ensure content does not overlap the sidebar */
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* When sidebar is collapsed */
+.sidebar.collapsed {
+    width: 80px; /* Adjust the width of the collapsed sidebar */
+}
+
+/* Adjust content margin when sidebar is collapsed */
+.content.sidebar-collapsed {
+    margin-left: 80px;
+}
+
+
+/* Collapsed Sidebar */
+.sidebar.collapsed {
+    width: 75px;
+    overflow: hidden; /* ✅ Hides both horizontal & vertical scroll when collapsed */
+}
+
+/* ✅ Hide Scrollbar When Collapsed */
+.sidebar.collapsed::-webkit-scrollbar {
+    display: none;
+}
+
+/* Scrollbar Styles for Webkit Browsers (Chrome, Safari) */
+.sidebar::-webkit-scrollbar {
+    width: 6px; /* Width of the scrollbar */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #044e06;
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background-color: #066b09;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background-color: #021601;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 1px solid #033b04;
+}
+
+.sidebar.collapsed .sidebar-header h3 {
+    display: none;
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle,
+#toggleSidebar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Add Box Shadow on Hover */
+.sidebar:hover {
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Sidebar Content */
+.sidebar-content {
+    padding: 20px 0;
+}
+
+/* Center icons when collapsed */
+.sidebar.collapsed .sidebar-content {
+    display: flex;
+    justify-content: center;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* Sidebar Menu Items */
+.sidebar-menu li {
+    margin-bottom: 10px;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Sidebar Menu Links */
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    gap: 20px; /* Space between icon and text */
+}
+
+/* Hover and Active State */
+.sidebar-menu li a:hover,
+.sidebar-menu li.active a {
+    background-color: #044e06;
+}
+
+/* Collapsed Sidebar Menu */
+.sidebar.collapsed .sidebar-menu li a {
+    padding: 15px 5px;
+    text-align: center;
+}
+
+/* Hide Text When Collapsed */
+.sidebar.collapsed .sidebar-menu li a span {
+    display: none;
+}
+
+/* Icon Size */
+.sidebar-menu li a i {
+    font-size: 28px; /* Adjust icon size */
+}
+
+/* Icon Size When Collapsed */
+.sidebar.collapsed .sidebar-menu li a i {
+    font-size: 28px; /* Bigger icon when collapsed */
+}
+
+/* Main Content Area */
+.main-content {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Content Shift on Sidebar Collapse */
+.sidebar.collapsed + .main-content {
+    margin-left: 75px;
+}
+
+/* Responsive Sidebar for Smaller Screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .sidebar.collapsed {
+        width: 60px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+    }
+
+    .sidebar.collapsed + .main-content {
+        margin-left: 60px;
+    }
+}
+
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    justify-content: space-between;
+}
+
+.container.sidebar-collapsed .main-content {
+    margin-left: 75px;
+}
+
+/* Product Section Styles */
+.product-section {
+    padding: 40px 20px;
+    margin-left: 75px;
+    transition: margin-left 0.3s ease;
+}
+
+.sidebar:not(.collapsed) + .main-content .product-section {
+    margin-left: 250px; /* Adjust based on your expanded sidebar width */
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    font-size: 24px;
+    color: #f0a500;
+    font-family: 'Swiss721', Georgia, serif; /* Apply Swiss 721 */
+}
+
+
+.product-carousel-container {
+    position: relative;
+    overflow: visible !important;
+    width: 100%;
+}
+
+
+.product-carousel {
+    display: flex;
+    overflow-x: auto;  /* Enables horizontal scroll */
+
+    scroll-behavior: smooth; 
+    gap: 20px; 
+    padding: 10px 0;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+}
+
+/* Hide scrollbar for Webkit browsers */
+.product-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.product-card {
+    flex: 0 0 auto;
+    height: 400px;
+    width: 280px;
+    margin: 0 10px;
+    background-color: #022302;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Needed for z-index layering */
+    overflow: visible !important; /* Ensure child elements can extend outside */
+    z-index: 10;
+    display: flex; /* 🔥 This enables flex properties */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: flex-end; /* Move contents to the bottom */
+    align-items: center; /* Center content horizontally */
+    padding: 20px; /* Add spacing from the bottom */
+}
+
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.product-image {
+    position: relative;
+    overflow: visible; 
+    z-index: 1000;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease-in-out, z-index 0.3s ease;
+    position: relative;
+    overflow: visible;
+    z-index: 1000;
+}
+
+.product-card:hover .product-image img {
+    transform: translate(-30px, -60px) rotate(-20deg) scale(1.45);
+    overflow: visible !important;
+    z-index: 1000;
+}
+
+
+
+.product-info {
+    padding: 15px;
+}
+
+.product-info h3 {
+    margin: 0 0 5px;
+    font-size: 16px;
+    color: white;
+}
+
+.product-category {
+    color: #aaa;
+    font-size: 14px;
+    font-family: 'Swiss721', Georgia, serif; /* Apply Swiss 721 */
+    margin: 0 0 10px;
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f0a500;
+    margin: 0;
+}
+
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(0, 90, 5, 0.8);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: background-color 0.3s ease;
+}
+
+.scroll-btn:hover {
+    background-color: rgba(0, 90, 5, 1);
+}
+
+.scroll-left {
+    left: 10px;
+}
+
+.scroll-right {
+    right: 10px;
+}
+
+@media (max-width: 768px) {
+    .product-card {
+        width: 220px;
+    }
+    
+    .product-image {
+        height: 220px;
+    }
+}
+
+@media (max-width: 576px) {
+    .product-card {
+        width: 180px;
+    }
+    
+    .product-image {
+        height: 180px;
+    }
+    
+    .section-header h2 {
+        font-size: 20px;
+    }
+}
+
+/* Lightbox Background (Full-Screen Overlay) */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Centered Lightbox Content */
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Close Button (Stays Fixed) */
+.close-lightbox {
+    position: absolute;
+    top: -40px;
+    right: 10px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* 🔥 Fix: Lock Image in Place */
+.lightbox-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative; /* Ensures image stays centered */
+}
+
+/* 🔥 Fix: Prevent Floating on Cursor Detection */
+.lightbox-image {
+    max-width: 100%;
+    max-height: 90vh; /* Ensures the image doesn't overflow vertically */
+    object-fit: contain; /* Keeps the full image visible */
+    position: relative; /* Ensures no absolute movement */
+    transform: none !important; /* Prevents unwanted transforms */
+    pointer-events: none; /* Stops cursor from affecting it */
+}
+
+
+/* Footer Styles */
+.footer {
+    position: relative;
+    background-image: url("images/footer-background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10px 0 5px;
+    color: white;
+    overflow: hidden;
+    margin-top: auto;
+    width: 100%;
+}
+
+/* Dark green overlay */
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(1, 29, 2, 0.85);
+    z-index: 0;
+}
+
+.footer-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch; /* Changed from flex-start to stretch */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* Footer Left - Logo */
+.footer-left {
+    flex: 0 0 20%;
+    display: flex;
+    align-items: center; /* This centers vertically */
+    justify-content: flex-start;
+    padding-top: 20px; /* Added padding to push logo down a bit */
+}
+
+.footer-left img {
+    max-width: 180px;
+    height: auto;
+}
+
+/* Footer Center - Info */
+.footer-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.footer-center h3 {
+    color: #f0a500;
+    font-family: 'Swiss721', Georgia, serif; /* Apply Swiss 721 */
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.footer-center p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.contact-icon-wrapper {
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.contact-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-label {
+    font-weight: bold;
+    color: #f0a500;
+}
+
+.contact-text a {
+    color: white;
+    text-decoration: none;
+}
+
+.contact-text a:hover {
+    color: #f0a500;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    margin-left: -3px;
+}
+
+.social-link {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    transform: scale(1.1);
+}
+
+.social-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+/* Footer Right - Links */
+.footer-right {
+    flex: 0 0 30%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* This centers vertically */
+    padding-top: 15px; /* Added padding to push links down a bit */
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 30px;
+    text-align: left;
+}
+
+.footer-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-links li a:hover {
+    color: #f0a500;
+}
+
+/* Copyright Text */
+.copyright {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copyright p {
+    font-size: 14px;
+}
+
+.copyright a {
+    color: white;
+    text-decoration: none;
+}
+
+.copyright a:hover {
+    color: #f0a500;
+}
+
+.floating-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #f0a500; /* Adjust color as needed */
+    color: white;
+    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.floating-btn:hover {
+    background-color: #d18e00;
+    transform: scale(1.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-left, .footer-center, .footer-right {
+        flex: 0 0 100%;
+        padding: 0;
+        margin-bottom: 30px;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .contact-info {
+        align-items: center;
+    }
+    
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-links {
+        grid-template-columns: 1fr;
+    }
+}
+.back-button {
+    position: fixed;
+    top: 20px;
+    font-family: 'Swiss721', Georgia, serif; /* Apply Swiss 721 */
+    right: 20px; /* Moved to top-right */
+    padding: 12px 18px;
+    background-color: #008307;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999; /* Ensure it stays on top */
+}
+
+.back-button:hover {
+    background-color: #006200;
+    transform: scale(1.05);
+}
+
+/* Search Box Styling (Similar to Back & Contact Buttons) */
+.search-container {
+    position: fixed;
+    top: 20px; 
+    right: 50%;
+    transform: translateX(50%);
+    background: #232531;
+    border-radius: 25px;
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Search Input */
+#searchBox {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 16px;
+    width: 200px;
+    font-family: 'Swiss721', Georgia, serif; /* Apply Swiss 721 */
+    padding: 8px;
+}
+
+/* Placeholder Text Color */
+#searchBox::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Search Results Dropdown */
+#searchResults {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 100%;
+    background: #2C2F40;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+/* Search Items */
+.search-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    color: white;
+}
+
+.search-item:hover {
+    background: #5897FB;
+}
+.highlight-product {
+    outline: 3px solid rgba(88, 151, 251, 0.8); /* Blue glow effect */
+    transition: outline 0.3s ease-in-out;
+}
+
+.search-item.selected {
+    background-color: #5897FB; /* Highlight color */
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+}
+
